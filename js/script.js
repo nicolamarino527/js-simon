@@ -12,6 +12,8 @@ const numberList = document.getElementById("numbers-list");
 const button = document.getElementById("button");
 const answersForm = document.getElementById("answers-form");
 const inputNumber = document.querySelectorAll("#answers-form input");
+const result = document.getElementById("result");
+const instructions = document.getElementById("instructions")
 
 // Generiamo le cifre da indovinare
 let randomNumbersList = [];
@@ -26,16 +28,22 @@ numberList.append(randomNumbersList);
 
 
 // Settiamo il tempo in cui possiamo vedere le cifre
-const clock = setTimeout(disappear, 2000);
+const clock = setTimeout(removeNumbers, 3000);
 
 // Scriviamo la funzione che fa scomparire i numeri e fa comparire i selettori
-function disappear() {
+function removeNumbers() {
     numberList.classList.add("d-none");
     console.log("ecco qua");   
     answersForm.classList.remove("d-none");
 };
-
-
+// Scrivaiamo la funzione che ci permette di far scomparire il form e apparire il risultato
+function removeForm() {
+    answersForm.classList.add("d-none");
+}
+// Scrivaiamo la funzione che ci permette di rimuovere le istruzioni
+function removeInstrucrions() {
+    instructions.classList.add("d-none");
+}
 // Evento al click immagazzina i numeri del player in un array
 button.addEventListener("click", (event) => {
 
@@ -60,12 +68,31 @@ button.addEventListener("click", (event) => {
     // Compariamo i due array contenenti i numeri casuali
     let sameNumbers = randomNumbersList.filter(common => playerNumbers.includes(common));
 
-    // Mostriamo il risultato in pagina
-        
-    let sameNumbersList = sameNumbers.length;
+    // Rimuoviamo il form e le istruzioni 
+    removeForm();
+    removeInstrucrions();
 
-    console.log(sameNumbers);
-    console.log(sameNumbers.length);
+    // Mostriamo il risultato in pagina se il giocatore ha indovinato almeno un numero
+
+        // se l risultato è compreso re 1 e 4
+        if (sameNumbers.length > 0 && sameNumbers.length <= 4){
+            result.textContent = `Bravo Hai indovinato ${sameNumbers.length} numeri su 5, (numeri giusti : ${sameNumbers.join(", ")}).`;
+        // se il risultato é 5
+        } else if (sameNumbers.length == 5){
+            result.textContent = `Complimenti hai indovinato tutti i numeri, numeri giusti : ${sameNumbers.join(", ")}.`;
+        // se il risultato è 0
+        } else {
+            result.textContent = "hai sbagliato tutto...";
+    };
+
+
+
+
+    
+    
+
+    // console.log(sameNumbers);
+    // console.log(sameNumbers.length);
     
     
    
